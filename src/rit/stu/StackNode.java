@@ -1,5 +1,8 @@
 package rit.stu;
 
+import static org.junit.Assert.assertTrue;
+
+import rit.cs.Node;
 import rit.cs.Stack;
 
 /**
@@ -13,24 +16,33 @@ public class StackNode<T> implements Stack<T> {
     /**
      * Create an empty stack.
      */
+    private Node<T> stack;
+
     public StackNode() {
+        this.stack = null;
     }
 
     @Override
     public boolean empty() {
-        return false;
+        return this.stack == null;
     }
 
     @Override
     public T pop() {
-        return null;
+        assert !empty();
+        T element = this.stack.getData();
+        this.stack = this.stack.getNext();
+        return element;
     }
 
     @Override
-    public void push(T element) {}
+    public void push(T element) {
+        this.stack = new Node<T> (element, this.stack);
+    }
 
     @Override
     public T top() {
-        return null;
+        assert !empty();
+        return this.stack.getData();
     }
 }
