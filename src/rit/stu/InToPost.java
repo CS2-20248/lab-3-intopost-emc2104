@@ -44,7 +44,7 @@ import java.util.Scanner;
  *  A B + C * D E - -<br>
  * <br>
  * @author RIT CS
- * @author YOUR NAME HERE
+ * @author Ethan Crawford
  */
 public class InToPost {
     /** The add operator */
@@ -126,7 +126,55 @@ public class InToPost {
     private Queue<String> convert(List<String> tokens) {
         // TODO
         // YOUR IMPLEMENTATION HERE
-        return null;   // replace this
+        Stack<String> opStack = new StackNode<>();
+        Queue<String> postFix = new QueueNode<>();
+        for(String token : tokens) {
+            if(isOperand(token)) {
+                postFix.enqueue(token);
+            }
+            else if(token.equals(OPEN_PAREN)) {
+                opStack.push(token);
+            }
+            else if(token.equals(CLOSE_PAREN)) {
+                while(!opStack.empty()) {
+                    String top = opStack.pop();
+                    if(top.equals(OPEN_PAREN)) {
+                        break;
+                    }
+                    else {
+                        postFix.enqueue(top);
+                    }
+                }
+            }
+            else {
+                while(!opStack.empty()) {
+                    String top = opStack.pop();
+                    if(greaterEqualPrecedence(top, token)){
+                        postFix.enqueue(top);
+                    }
+                    else {
+                        opStack.push(top);
+                        break;
+                    }
+                }
+                opStack.push(token);
+            }
+        }
+        while(!opStack.empty()) {
+            postFix.enqueue(opStack.pop());
+        }
+        return postFix;
+    }
+    /**
+     * Determines if token is an operand
+     * 
+     * @param token the String checked
+     * @return true if token is an operand, false if otherwise
+     */
+    private boolean isOperand(String token) {
+        return !precedence.containsKey(token) &&
+        !token.equals(OPEN_PAREN) &&
+        !token.equals(CLOSE_PAREN);
     }
 
     /**

@@ -13,20 +13,31 @@ import rit.cs.Stack;
  */
 public class StackNode<T> implements Stack<T> {
 
+        private Node<T> stack;
+
     /**
      * Create an empty stack.
      */
-    private Node<T> stack;
 
     public StackNode() {
         this.stack = null;
     }
 
+    /**
+     * Checks if the stack is empty
+     * 
+     * @return true if the stack is empty, false otherwise
+     */
     @Override
     public boolean empty() {
         return this.stack == null;
     }
 
+    /**
+     * Removes and returns the top element in the stack
+     * 
+     * @return the element removed from the top of the stack
+     */
     @Override
     public T pop() {
         assert !empty();
@@ -35,11 +46,21 @@ public class StackNode<T> implements Stack<T> {
         return element;
     }
 
+    /**
+     * Adds an elemnt to the top of the stack
+     * 
+     * @param element the element that gets pushed
+     */
     @Override
     public void push(T element) {
         this.stack = new Node<T> (element, this.stack);
     }
 
+    /**
+     * Returns the top element of the stack without removing it
+     * 
+     * @return the element at the top of the stack
+     */
     @Override
     public T top() {
         assert !empty();

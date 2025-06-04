@@ -10,15 +10,22 @@ import rit.cs.Queue;
  * @author RIT CS
  */
 public class QueueNode<T> implements Queue<T> {
+
+    private Node<T> queue;
+
     /**
      * Create an empty queue.
      */
-    private Node<T> queue;
 
     public QueueNode() {
         this.queue = null;
     }
 
+    /**
+     * Returns the last element of the queue
+     * 
+     * @return the element in the back of the queue
+     */
     @Override
     public T back() {
         assert !empty();
@@ -29,6 +36,11 @@ public class QueueNode<T> implements Queue<T> {
         return current.getData();
     }
 
+    /**
+     * Removes and returns the first element of the queue
+     * 
+     * @return the element in the front of the queue
+     */
     @Override
     public T dequeue() {
         assert !empty();
@@ -37,11 +49,21 @@ public class QueueNode<T> implements Queue<T> {
         return element;
     }
 
+    /**
+     * Checks if the queue is empty
+     * 
+     * @return true if the queue has no elements, false otherwise
+     */
     @Override
     public boolean empty() {
         return queue == null;
     }
 
+    /**
+     * Adds an element to the back of the queue
+     * 
+     * @param element the value added to the queue
+     */
     @Override
     public void enqueue(T element) {
         Node<T> newNode = new Node<T>(element, null);
@@ -57,6 +79,12 @@ public class QueueNode<T> implements Queue<T> {
         }
     }
 
+    /**
+     * Returns the first value of the queue
+     * 
+     * @return the element in the front of the queue
+     * @throws AssertionError if the queue is empty
+     */
     @Override
     public T front() {
         assert !empty();
