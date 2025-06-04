@@ -13,30 +13,53 @@ public class QueueNode<T> implements Queue<T> {
     /**
      * Create an empty queue.
      */
+    private Node<T> queue;
+
     public QueueNode() {
+        this.queue = null;
     }
 
     @Override
     public T back() {
-        return null;
+        assert !empty();
+        Node<T> current = queue;
+        while(current.getNext() != null) {
+            current = current.getNext();
+        }
+        return current.getData();
     }
 
     @Override
     public T dequeue() {
-        return null;
+        assert !empty();
+        T element = queue.getData();
+        queue = queue.getNext();
+        return element;
     }
 
     @Override
     public boolean empty() {
-        return false;
+        return queue == null;
     }
 
     @Override
     public void enqueue(T element) {
+        Node<T> newNode = new Node<T>(element, null);
+        if(empty()) {
+            queue = newNode;
+        }
+        else {
+            Node<T> current = queue;
+            while(current.getNext() != null) {
+                current = current.getNext();
+            }
+            current.setNext(newNode);
+        }
     }
 
     @Override
     public T front() {
-        return null;
+        assert !empty();
+        return queue.getData();
     }
 }
